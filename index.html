@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canil - Página Inicial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         /* Paleta de Cores */
         :root {
             --marron-claro: #fcebe3;
             --cinza-gelo: #f8f9fa;
-            --gradiente-suave: linear-gradient(to bottom, #ffffff, #fcebe3);
+            --gradiente-suave: linear-gradient(195deg, #fcebe3,  #faf1e7 );
         }
 
         body {
@@ -43,13 +44,52 @@
             width: 100%;
             aspect-ratio: 1/1;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 5px;
+            border: solid 5px white;
             transition: transform 0.3s ease-in-out;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .gallery img:hover {
             transform: scale(1.05);
+        }
+
+        #criadora-img{
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border: solid 5px white;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0px 4px 6px rgba(10, 10, 10, 0.2);
+
+        }
+
+        #secao-contato a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            z-index: 1000;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .whatsapp-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
         
         @media (max-width: 750px) {
@@ -67,26 +107,71 @@
 </head>
 <body>
 
-    <!-- Seção Logo -->
-    <section class="text-center my-2">
-        <img src="images/logo_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
-    </section>
+    <a href="https://wa.me/SEU_NUMERO" class="whatsapp-button" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+    </a>
 
     <!-- Seção Sobre o Canil -->
+    <section class="container text-center mb-3 mt-2">
+        <img src="images/logo_canil_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <div>
+                <h2>Bem-vindo ao Canil Little Sun’s Rays! 🌟🐶</h2>
+                <p>O Canil Little Sun’s Rays nasceu do amor pela criação responsável e do compromisso em proporcionar filhotes saudáveis, bem-socializados e prontos para levar alegria às suas novas famílias.</p>
+                <p>Aqui, cada cãozinho é criado com todo o carinho e acompanhamento necessário. Contamos com uma rede de veterinários parceiros, garantindo cuidados constantes com a saúde, nutrição e desenvolvimento de nossos filhotes. Prezamos por um ambiente seguro, tranquilo e cheio de amor, para que cada filhote cresça equilibrado, feliz e pronto para se tornar um grande companheiro de vida.</p>
+                <div id="more-text" class="collapse">
+                    <p>Se você busca um filhote saudável, criado com amor e responsabilidade, o Canil Little Sun’s Rays está aqui para ajudá-lo a encontrar o companheiro perfeito! 💛🐾</p>
+                    <p>O Little Sun’s Rays tem raízes em um legado de mais de 20 anos, iniciado por Keylla Bandeira, uma criadora apaixonada que trabalhou com diversas raças e sempre prezou pela saúde e qualidade dos filhotes. Em 2017, Keylla encerrou sua trajetória na criação, e eu, motivada pelo mesmo amor e compromisso, dei continuidade ao trabalho, focando exclusivamente nas raças Chihuahua e Spitz Alemão Anão. Desde então, venho aprimorando minha criação, buscando sempre o melhor para cada filhote.</p>
+                    <h4>📍 Entre em contato conosco e conheça mais sobre o nosso trabalho!</h4>
+                </div>
+                <button class="btn btn-light mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#more-text">Mais...</button>
+            </div>
+            <div class="me-4">
+                <img src="images/logo_canil_t.png" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre criadora -->
     <section class="container text-center mb-5">
-      <div class="d-flex align-items-center justify-content-center w-100">
-          <div class="me-4">
-              <img src="images/logo_t.png" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
-          </div>
-          
-          <div>
-            <h2 class="mb-3">Sobre o Canil</h2>
-            <p class="text-muted w-fill" style="max-width: 300px;">
-                O <strong>Nome do Canil</strong> é especializado na criação da raça <strong>[Raça]</strong>.<br>
-                Trabalhamos com amor e dedicação para garantir que nossos cães cresçam saudáveis, sociáveis e felizes.
-            </p>
-          </div>
-      </div>
+        <img id="criadora-img" src="images/criadora.jpeg" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso border" style="max-width: 300px;">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <div class="me-4">
+                <img id="criadora-img" src="images/criadora.jpeg" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 300px;">
+            </div>
+            
+            <div>
+                <h2 class="mb-3 mt-2">Criadora</h2>
+                <p class="text-muted w-fill" style="max-width: 750px;">
+                    Meu nome é Steffania Martins, sou criadora especializada em Chihuahua e Spitz Alemão Anão (Lulu da Pomerânia) e estudante de Medicina Veterinária. Acredito que criar cães vai muito além da reprodução; é sobre dedicação, ética e respeito pelo bem-estar animal.
+                </p>
+                <div id="more-text-criadora" class="collapse" style="max-width: 750px;">
+                    Nosso compromisso não termina na entrega do filhote. Acreditamos que cada família que confia no Little Sun’s Rays merece suporte, informações e acompanhamento, garantindo uma adaptação tranquila e uma convivência harmoniosa com seu novo pet.
+                </div>
+                <button class="btn btn-light mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#more-text-criadora">Mais...</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre o hotel do canil -->
+    <section class="container text-center mb-5">
+        <img src="images/logo_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <div class="me-4">
+                <img src="images/logo_t.png" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
+            </div>
+            <div class="">
+                <h2 class="mb-3">Sobre o Hotelzinho</h2>
+                <p class="text-muted w-fill">
+                    Aqui, seu pet recebe todo o carinho, conforto e cuidado que merece! Nosso hotelzinho foi criado para proporcionar um ambiente seguro, acolhedor e divertido para os cães. Contamos com acomodações confortáveis, atividades recreativas e acompanhamento especializado, garantindo que seu melhor amigo se sinta em casa enquanto você viaja ou precisa de um tempo. supervisão 24 horas e muito amor para que seu pet tenha uma estadia inesquecível. Aqui cada hóspede é tratado como parte da família!
+                </p>
+                <div class="gallery">
+                    <img src="images/1.jpeg" alt="Cliente 1">
+                    <img src="images/2.jpeg" alt="Cliente 2">
+                    <img src="images/3.jpeg" alt="Cliente 3">
+                </div>
+            </div>
+        </div>
     </section>
   
 
@@ -97,7 +182,7 @@
             <div class="col-md-3">
                 <div class="card border-0 shadow">
                     <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px;">Imagem 1</div>
+                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto1.jpeg');"></div>
                         <h5 class="card-title">Produto 1</h5>
                         <p class="text-muted">Descrição breve do produto.</p>
                         <span class="fw-bold">R$ 50,00</span>
@@ -107,7 +192,7 @@
             <div class="col-md-3">
                 <div class="card border-0 shadow">
                     <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px;">Imagem 2</div>
+                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto2.jpeg');"></div>
                         <h5 class="card-title">Produto 2</h5>
                         <p class="text-muted">Descrição breve do produto.</p>
                         <span class="fw-bold">R$ 70,00</span>
@@ -117,7 +202,7 @@
             <div class="col-md-3">
                 <div class="card border-0 shadow">
                     <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px;">Imagem 3</div>
+                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto3.jpeg');"></div>
                         <h5 class="card-title">Produto 3</h5>
                         <p class="text-muted">Descrição breve do produto.</p>
                         <span class="fw-bold">R$ 90,00</span>
@@ -127,7 +212,7 @@
             <div class="col-md-3">
                 <div class="card border-0 shadow">
                     <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px;">Imagem 4</div>
+                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto4.jpeg');"></div>
                         <h5 class="card-title">Produto 4</h5>
                         <p class="text-muted">Descrição breve do produto.</p>
                         <span class="fw-bold">R$ 120,00</span>
@@ -137,10 +222,39 @@
         </div>
     </section>
 
+    <!-- Seção Produtos -->
+    <section class="container mb-5 px-4">
+        <h2 class="text-center mb-4">📦 Envio e Entrega dos Filhotes</h2>
+        <h5>Sabemos que a chegada de um novo filhote é um momento especial, por isso, realizamos a entrega de forma segura e planejada.</h5>
+        <p>
+            <br>
+            ✔ Entrega Somente Após o Desmame Natural – O desmame acontece de forma natural, respeitando o ritmo do filhote. Cada um tem seu tempo, e a entrega só ocorre quando ele está pronto para a transição para seu novo lar.<br>
+            ✔ Transporte Seguro – Trabalhamos com envio aéreo e terrestre, sempre garantindo o bem-estar do filhote durante o trajeto.<br>
+            ✔ Acompanhamento e Orientação – Antes da entrega, fornecemos todas as informações necessárias para que o filhote tenha uma adaptação tranquila.<br>
+            <br>
+            🐾 A entrega dos filhotes vai depender exclusivamente deles.<br>
+            🐾 Os nossos filhotes fazem um desmame natural, onde são devidamente acompanhados e socializados para chegarem na sua casa destemidos, corajosos e carinhosos.<br>
+            🐾 O filhote só vai para a nova casa após o desmame natural, quando se observa que está tendo uma boa interação social e comendo ração seca.<br>
+            <br>
+            <h3>☀️ Todos os Filhotes São Entregues Com:</h3>
+            ✅ Protocolo do pedigree CBKC – Garantia de origem e padrão da raça.<br>
+            ✅ Pré-adestrados no tapete higiênico – Facilitando a adaptação no novo lar.<br>
+            ✅ Comendo ração seca – Garantindo uma transição alimentar saudável.<br>
+            ✅ Vacinado conforme a idade com a vacina V10 importada – Proteção essencial para a saúde do filhote.<br>
+            ✅ Devidamente desparasitados – Seguindo protocolos veterinários para a segurança do filhote.<br>
+            ✅ Kit filhote – Inclui itens essenciais para os primeiros dias no novo lar.<br>
+            <br><br>
+            <h3>🩺 Saúde e Cuidados</h3>
+            ✔ Filhotes Vermifugados e Vacinados – Todos os filhotes são entregues com o protocolo sanitário atualizado.<br>
+            ✔ Alimentação de Qualidade – Utilizamos ração super premium, garantindo o crescimento saudável.<br>
+            ✔ Socialização Adequada – Os filhotes crescem em um ambiente familiar, recebendo estímulos positivos para se tornarem cães confiantes e equilibrados.<br>
+        </p>
+    </section>
+
     <!-- Seção Contato -->
     <section class="container text-center mb-5">
         <h2 class="mb-4">Contato</h2>
-        <div class="row g-4">
+        <div id="secao-contato" class="row g-4">
             <div class="col-md-4">
                 <div class="contact-card">
                     <h5>📞 Telefone</h5>
@@ -154,10 +268,12 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="contact-card">
-                    <h5>📍 Endereço</h5>
-                    <p>Rua Exemplo, 123 - Cidade, Estado</p>
-                </div>
+                <a href="https://www.google.com/maps/search/?q=Av.+Paulista,+São+Paulo,+SP" target="_blank">
+                    <div class="contact-card">
+                        <h5>📍 Endereço</h5>
+                        <p>Rua Exemplo, 123 - Cidade, Estado</p>
+                    </div>
+                </a>
             </div>
         </div>
         <p class="mt-4">📲 <strong>Redes Sociais:</strong> <a href="#" class="text-primary">Instagram</a> | <a href="#" class="text-primary">Facebook</a></p>
@@ -181,7 +297,7 @@
 
     <!-- Rodapé -->
     <footer class="bg-dark py-3 text-center text-white">
-        <p>&copy; 2025 Nome do Canil - Todos os direitos reservados.</p>
+        <p>&copy; 2025 Canil Little Sun’s Rays! 🌟🐶 - Todos os direitos reservados.</p>
     </footer>
 
 </body>
