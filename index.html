@@ -6,30 +6,66 @@
     <title>Canil - Página Inicial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        fetch("produtos.json")
+            .then(response => response.json())
+            .then(produtos => {
+                const produtosContainer = document.getElementById("produtos-container");
+                produtosContainer.innerHTML = "";
+
+                produtos.forEach((produto, index) => {
+                    const card = document.createElement("div");
+                    card.classList.add("col-md-3");
+                    card.innerHTML = `
+                        <div class="card border-0 shadow">
+                            <div class="card-body text-center">
+                                <div class="bg-light mb-3" 
+                                    style="height: 150px; background-size: cover; background-image: url('images/produto${index + 1}.jpg');">
+                                </div>
+                                <h5 class="card-title">${produto.nome}</h5>
+                                <p class="text-muted">${produto.descricao}</p>
+                                <span class="fw-bold">R$ ${produto.preco}</span>
+                            </div>
+                        </div>
+                    `;
+                    produtosContainer.appendChild(card);
+                });
+            })
+            .catch(error => console.error("Erro ao carregar os produtos:", error));
+    });
+
+    </script>
     <style>
         /* Paleta de Cores */
         :root {
             --marron-claro: #fcebe3;
             --cinza-gelo: #f8f9fa;
-            --gradiente-suave: linear-gradient(top, #fcebe3,  #faf1e7 );
+            --gradiente-sutil: linear-gradient(to top right,#ffffff, #e2c4af, #ffffff);
         }
 
         body {
-            background: var(--gradiente-suave);
+            background: var(--gradiente-sutil);
+            background-color: var(--gradiente-sutil);
             font-family: Arial, sans-serif;
+        }
+
+        footer {
+            min-height: 100px;
+            padding: 5px 60px 5px 60px;
+        }
+
+        footer a,  footer a:visited {
+            text-decoration: none;
+            color: white;
         }
 
         h1, h2, h3 {
             color: #5a3e36; /* Marrom escuro */
         }
 
-        /* Seção de Contato */
-        .contact-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        p {
+            font-size: 16pt;
         }
 
         /* Galeria estilo Instagram */
@@ -70,7 +106,7 @@
             color: black;
         }
 
-        .whatsapp-button {
+        .whatsapp-button, .instagram-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -80,11 +116,23 @@
             animation: pulse 1.5s infinite alternate;
         }
 
-        .whatsapp-button img {
+        .whatsapp-button img, .instagram-button img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .instagram-button {
+            left: 20px;
+        }
+
+        .instagram-button img {
+            border-radius: 25%;
+        }
+
+        .quebra_linha_titulo{
+            display: none;
         }
 
         @keyframes pulse {
@@ -103,12 +151,24 @@
             display: none;
           }
         }
+
+        @media (max-width: 300px) {
+          .quebra_linha_titulo {
+            display: block;
+          }
+        }
+
+        
     </style>
 </head>
 <body>
 
-    <a href="https://wa.me/SEU_NUMERO" class="whatsapp-button" target="_blank">
+    <a href="https://wa.me/+5581995211072" class="whatsapp-button" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+    </a>
+
+    <a href="https://www.instagram.com/steffania.littlesunsrays?igsh=ZDJ6emhrOWZxa2wx" class="instagram-button" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
     </a>
 
     <!-- Seção Sobre o Canil -->
@@ -116,28 +176,26 @@
         <img src="images/logo_canil_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div>
-                <h2>Bem-vindo ao Canil Little Sun’s Rays! 🌟🐶</h2>
+                <h2>Bem-vindo ao </h2><h1>Canil Little Sun’s Rays</h1>
                 <p>O Canil Little Sun’s Rays nasceu do amor pela criação responsável e do compromisso em proporcionar filhotes saudáveis, bem-socializados e prontos para levar alegria às suas novas famílias.</p>
-                <p>Aqui, cada cãozinho é criado com todo o carinho e acompanhamento necessário. Contamos com uma rede de veterinários parceiros, garantindo cuidados constantes com a saúde, nutrição e desenvolvimento de nossos filhotes. Prezamos por um ambiente seguro, tranquilo e cheio de amor, para que cada filhote cresça equilibrado, feliz e pronto para se tornar um grande companheiro de vida.</p>
                 <div id="more-text" class="collapse">
+                    <p>Aqui, cada cãozinho é criado com todo o carinho e acompanhamento necessário. Contamos com uma rede de veterinários parceiros, garantindo cuidados constantes com a saúde, nutrição e desenvolvimento de nossos filhotes. Prezamos por um ambiente seguro, tranquilo e cheio de amor, para que cada filhote cresça equilibrado, feliz e pronto para se tornar um grande companheiro de vida.</p>
                     <p>Se você busca um filhote saudável, criado com amor e responsabilidade, o Canil Little Sun’s Rays está aqui para ajudá-lo a encontrar o companheiro perfeito! 💛🐾</p>
-                    <p>O Little Sun’s Rays tem raízes em um legado de mais de 20 anos, iniciado por Keylla Bandeira, uma criadora apaixonada que trabalhou com diversas raças e sempre prezou pela saúde e qualidade dos filhotes. Em 2017, Keylla encerrou sua trajetória na criação, e eu, motivada pelo mesmo amor e compromisso, dei continuidade ao trabalho, focando exclusivamente nas raças Chihuahua e Spitz Alemão Anão. Desde então, venho aprimorando minha criação, buscando sempre o melhor para cada filhote.</p>
-                    <h4>📍 Entre em contato conosco e conheça mais sobre o nosso trabalho!</h4>
                 </div>
                 <button class="btn btn-light mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#more-text">Mais...</button>
             </div>
             <div class="me-4">
-                <img src="images/logo_canil_t.png" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
+                <img src="images/logo_canil_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
             </div>
         </div>
     </section>
 
     <!-- Seção Sobre criadora -->
     <section class="container text-center mb-5">
-        <img id="criadora-img" src="images/criadora.jpeg" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso border" style="max-width: 300px;">
+        <img id="criadora-img" src="images/criadora.jpg" alt="Criadora" class="img-fluid img-fluid-flex-inverso border" style="max-width: 300px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div class="me-4">
-                <img id="criadora-img" src="images/criadora.jpeg" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 300px;">
+                <img id="criadora-img" src="images/criadora.jpg" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 300px;">
             </div>
             
             <div>
@@ -146,7 +204,7 @@
                     Meu nome é Steffania Martins, sou criadora especializada em Chihuahua e Spitz Alemão Anão (Lulu da Pomerânia) e estudante de Medicina Veterinária. Acredito que criar cães vai muito além da reprodução; é sobre dedicação, ética e respeito pelo bem-estar animal.
                 </p>
                 <div id="more-text-criadora" class="collapse" style="max-width: 750px;">
-                    Nosso compromisso não termina na entrega do filhote. Acreditamos que cada família que confia no Little Sun’s Rays merece suporte, informações e acompanhamento, garantindo uma adaptação tranquila e uma convivência harmoniosa com seu novo pet.
+                    <p>Nosso compromisso não termina na entrega do filhote. Acreditamos que cada família que confia no Little Sun’s Rays merece suporte, informações e acompanhamento, garantindo uma adaptação tranquila e uma convivência harmoniosa com seu novo pet.</p>
                 </div>
                 <button class="btn btn-light mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#more-text-criadora">Mais...</button>
             </div>
@@ -155,10 +213,10 @@
 
     <!-- Seção Sobre o hotel do canil -->
     <section class="container text-center mb-5">
-        <img src="images/logo_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
+        <img src="images/logo_t.png" alt="Logo do hotelzinho" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div class="me-4">
-                <img src="images/logo_t.png" alt="Imagem do Canil" class="img-fluid img-fluid-flex" style="max-width: 450px;">
+                <img src="images/logo_t.png" alt="Logo do hotelzinho" class="img-fluid img-fluid-flex" style="max-width: 450px;">
             </div>
             <div class="">
                 <h2 class="mb-3">Sobre o Hotelzinho</h2>
@@ -166,9 +224,9 @@
                     Aqui, seu pet recebe todo o carinho, conforto e cuidado que merece! Nosso hotelzinho foi criado para proporcionar um ambiente seguro, acolhedor e divertido para os cães. Contamos com acomodações confortáveis, atividades recreativas e acompanhamento especializado, garantindo que seu melhor amigo se sinta em casa enquanto você viaja ou precisa de um tempo. supervisão 24 horas e muito amor para que seu pet tenha uma estadia inesquecível. Aqui cada hóspede é tratado como parte da família!
                 </p>
                 <div class="gallery">
-                    <img src="images/1.jpeg" alt="Cliente 1">
-                    <img src="images/2.jpeg" alt="Cliente 2">
-                    <img src="images/3.jpeg" alt="Cliente 3">
+                    <img src="images/hotelzinho1.jpg">
+                    <img src="images/hotelzinho2.jpg">
+                    <img src="images/hotelzinho3.jpg">
                 </div>
             </div>
         </div>
@@ -178,47 +236,17 @@
     <!-- Seção Produtos -->
     <section class="container mb-5">
         <h2 class="text-center mb-4">Produtos em Destaque</h2>
-        <div class="row g-4">
-            <div class="col-md-3">
+        <div id="produtos-container" class="row g-4">
+            <!--<div class="col-md-3">
                 <div class="card border-0 shadow">
                     <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto1.jpeg');"></div>
+                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto1.jpg');"></div>
                         <h5 class="card-title">Produto 1</h5>
                         <p class="text-muted">Descrição breve do produto.</p>
                         <span class="fw-bold">R$ 50,00</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow">
-                    <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto2.jpeg');"></div>
-                        <h5 class="card-title">Produto 2</h5>
-                        <p class="text-muted">Descrição breve do produto.</p>
-                        <span class="fw-bold">R$ 70,00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow">
-                    <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto3.jpeg');"></div>
-                        <h5 class="card-title">Produto 3</h5>
-                        <p class="text-muted">Descrição breve do produto.</p>
-                        <span class="fw-bold">R$ 90,00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card border-0 shadow">
-                    <div class="card-body text-center">
-                        <div class="bg-light mb-3" style="height: 150px; background-size: cover; background-image: url('images/produto4.jpeg');"></div>
-                        <h5 class="card-title">Produto 4</h5>
-                        <p class="text-muted">Descrição breve do produto.</p>
-                        <span class="fw-bold">R$ 120,00</span>
-                    </div>
-                </div>
-            </div>
+            </div>-->
         </div>
     </section>
 
@@ -251,53 +279,46 @@
         </p>
     </section>
 
-    <!-- Seção Contato -->
-    <section class="container text-center mb-5">
-        <h2 class="mb-4">Contato</h2>
-        <div id="secao-contato" class="row g-4">
-            <div class="col-md-4">
-                <div class="contact-card">
-                    <h5>📞 Telefone</h5>
-                    <p>(XX) XXXXX-XXXX</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="contact-card">
-                    <h5>📧 Email</h5>
-                    <p>contato@canil.com</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <a href="https://www.google.com/maps/search/?q=Av.+Paulista,+São+Paulo,+SP" target="_blank">
-                    <div class="contact-card">
-                        <h5>📍 Endereço</h5>
-                        <p>Rua Exemplo, 123 - Cidade, Estado</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <p class="mt-4">📲 <strong>Redes Sociais:</strong> <a href="#" class="text-primary">Instagram</a> | <a href="#" class="text-primary">Facebook</a></p>
-    </section>
-
     <!-- Seção Galeria -->
     <section class="container mb-5">
         <h2 class="text-center mb-4">Nossos Clientes</h2>
         <div class="gallery">
-            <img src="images/1.jpeg" alt="Cliente 1">
-            <img src="images/2.jpeg" alt="Cliente 2">
-            <img src="images/3.jpeg" alt="Cliente 3">
-            <img src="images/4.jpeg" alt="Cliente 4">
-            <img src="images/5.jpeg" alt="Cliente 5">
-            <img src="images/6.jpeg" alt="Cliente 6">
-            <img src="images/7.jpeg" alt="Cliente 7">
-            <img src="images/8.jpeg" alt="Cliente 8">
-            <img src="images/9.jpeg" alt="Cliente 9">
+            <img src="images/galeria1.jpg">
+            <img src="images/galeria2.jpg">
+            <img src="images/galeria3.jpg">
+            <img src="images/galeria4.jpg">
+            <img src="images/galeria5.jpg">
+            <img src="images/galeria6.jpg">
+            <img src="images/galeria7.jpg">
+            <img src="images/galeria8.jpg">
+            <img src="images/galeria9.jpg">
         </div>
     </section>
 
+    <!-- Seção Sobre historia -->
+    <section class="container text-center mb-3 mt-2">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <div>
+                <h2>História</h2>
+                <p>O Little Sun’s Rays tem raízes em um legado de mais de 20 anos, iniciado por Keylla Bandeira, uma criadora apaixonada que trabalhou com diversas raças e sempre prezou pela saúde e qualidade dos filhotes. Em 2017, Keylla encerrou sua trajetória na criação, e eu, motivada pelo mesmo amor e compromisso, dei continuidade ao trabalho, focando exclusivamente nas raças Chihuahua e Spitz Alemão Anão. Desde então, venho aprimorando minha criação, buscando sempre o melhor para cada filhote.</p>
+                <h4>📍 Entre em contato conosco e conheça mais sobre o nosso trabalho!</h4>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-5 px-3">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4879701572463!2d-34.833085024247794!3d-7.948419279186695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab3dc63797db65%3A0x9ba827b35a0a501a!2sCANIL%20E%20HOTELZINHO%20LITTLE%20SUN&#39;S%20RAYS!5e0!3m2!1spt-BR!2sbr!4v1739290577560!5m2!1spt-BR!2sbr" width="100%" height="300" class="p-0 m-0 border border-5" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
     <!-- Rodapé -->
-    <footer class="bg-dark py-3 text-center text-white">
-        <p>&copy; 2025 Canil Little Sun’s Rays! 🌟🐶 - Todos os direitos reservados.</p>
+    <footer class="bg-dark py-3 px-5 text-center text-white d-flex align-items-center justify-content-center">
+        <div class="w-100 m-0 d-flex flex-column align-items-center justify-content-center">
+            <div>&copy; 2025 Canil Little Sun’s Rays! 🌟🐶</div>
+            <div>
+                <a href="https://wa.me/+5581995211072" target="_blank">(81) 9 9521-1072</a> | <a href="https://www.instagram.com/steffania.littlesunsrays?igsh=ZDJ6emhrOWZxa2wx" target="_blank">@steffania.littlesunsrays</a>
+            </div>
+            <div><a href="https://www.google.com/maps?ll=-7.948425,-34.83051&z=16&t=m&hl=pt-BR&gl=BR&mapclient=embed&cid=11216258523229474842" target="_blank">R. Vitória Régia, 307 - Janga, Paulista - PE, CEP:53439-340</a></div>
+        </div>
     </footer>
 
 </body>
