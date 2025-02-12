@@ -100,6 +100,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Administração do Canil</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("produtos.json")
+                .then(response => response.json())
+                .then(produtos => {
+                    produtos.forEach((produto, index) => {
+                        $i = index + 1;
+                        $(`#produto_${$i} .input-nome`).val(produto.nome);
+                        $(`#produto_${$i} .input-preco`).val(produto.preco);
+                        $(`#produto_${$i} .input-descricao`).val(produto.descricao);
+                    });
+                })
+                .catch(error => console.error("Erro ao carregar os produtos:", error));
+        });
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Paleta de Cores */
@@ -163,22 +179,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h4 class="text-center">Produtos (Máx: 4)</h4>
                         <div class="d-flex flex-rown flex-wrap">
                             <?php for ($i = 1; $i <= 4; $i++): ?>
-                                <div class="border p-3 mb-3">
+                                <div id="produto_<?= $i ?>" class="border p-3 mb-3">
                                     <h4>Produto <?= $i ?></h4>
                                     <div class="form-group">
                                         <input type="file" class="form-control" name="produto<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Nome:</label>
-                                        <input type="text" class="form-control" name="nome<?= $i ?>">
+                                        <input type="text" class="form-control input-nome" name="nome<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Preço:</label>
-                                        <input type="text" class="form-control" name="preco<?= $i ?>">
+                                        <input type="text" class="form-control input-preco" name="preco<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Descrição:</label>
-                                        <textarea class="form-control" name="descricao<?= $i ?>"></textarea>
+                                        <textarea class="form-control input-descricao" name="descricao<?= $i ?>"></textarea>
                                     </div>
                                 </div>
                             <?php endfor; ?>
