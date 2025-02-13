@@ -8,32 +8,73 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-        fetch("produtos.json")
-            .then(response => response.json())
-            .then(produtos => {
-                const produtosContainer = document.getElementById("produtos-container");
-                produtosContainer.innerHTML = "";
+            fetch("dados.json")
+                .then(response => response.json())
+                .then(json => {
 
-                produtos.forEach((produto, index) => {
-                    const card = document.createElement("div");
-                    card.classList.add("col-md-3");
-                    card.innerHTML = `
-                        <div class="card border-0 shadow">
-                            <div class="card-body text-center">
-                                <div class="bg-light mb-3" 
-                                    style="height: 150px; background-size: cover; background-image: url('images/produto${index + 1}.jpg');">
+                    //ninhadas
+                    if(json["ninhadas"] != undefined){
+                        const ninhadasContainer = document.getElementById("ninhadas-container");
+                        ninhadasContainer.innerHTML = "";
+                        json["ninhadas"].forEach((ninhada, index) => {
+                            const card = document.createElement("div");
+                            card.classList.add("col-md-3");
+                            card.innerHTML = `
+                                <div class="card border-0 shadow">
+                                    <div class="card-body text-center">
+                                        <div class="bg-light mb-3" 
+                                            style="height: 200px; background-size: cover; background-image: url('images/ninhada${index + 1}.jpg');">
+                                        </div>
+                                        <h5 class="card-title">${ninhada.nome}</h5>
+                                        <p class="text-muted">${ninhada.descricao}</p>
+                                        <span class="fw-bold">${ninhada.pais}</span>
+                                    </div>
                                 </div>
-                                <h5 class="card-title">${produto.nome}</h5>
-                                <p class="text-muted">${produto.descricao}</p>
-                                <span class="fw-bold">R$ ${produto.preco}</span>
-                            </div>
-                        </div>
-                    `;
-                    produtosContainer.appendChild(card);
-                });
+                            `;
+                            ninhadasContainer.appendChild(card);
+                        });
+                    }
+
+                    //produtos
+                    if(json["produtos"] != undefined){
+                        const produtosContainer = document.getElementById("produtos-container");
+                        produtosContainer.innerHTML = "";
+                        json["produtos"].forEach((produto, index) => {
+                            const card = document.createElement("div");
+                            card.classList.add("col-md-3");
+                            card.innerHTML = `
+                                <div class="card border-0 shadow">
+                                    <div class="card-body text-center">
+                                        <div class="bg-light mb-3" 
+                                            style="height: 150px; background-size: cover; background-image: url('images/produto${index + 1}.jpg');">
+                                        </div>
+                                        <h5 class="card-title">${produto.nome}</h5>
+                                        <p class="text-muted">${produto.descricao}</p>
+                                        <span class="fw-bold">R$ ${produto.preco}</span>
+                                    </div>
+                                </div>
+                            `;
+                            produtosContainer.appendChild(card);
+                        });
+                    }
             })
             .catch(error => console.error("Erro ao carregar os produtos:", error));
-    });
+            
+            document.querySelectorAll('.scroll-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    const offset = 70; // Altura do cabeçalho
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const position = elementRect + window.scrollY - offset;
+                    window.scrollTo({
+                        top: position,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
     </script>
     <style>
         /* Paleta de Cores */
@@ -47,6 +88,11 @@
             background: var(--gradiente-sutil);
             background-color: var(--gradiente-sutil);
             font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            /*background: linear-gradient(to bottom right, #e2c4af, black);*/
+            border-bottom: 1px solid rgba(248, 182, 134, 0.5); /* Borda sutil */
         }
 
         footer {
@@ -65,6 +111,15 @@
 
         p {
             font-size: 16pt;
+        }
+
+        .navbar-nav li {
+            font-size: 14pt;
+        }
+
+        .content {
+            scroll-margin-top: 70px; /* Ajuste para o tamanho do cabeçalho */
+            padding: 100px 20px; /* Apenas para visualização melhor */
         }
 
         /* Galeria estilo Instagram */
@@ -170,12 +225,36 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
     </a>
 
+    <!-- cabeçalho -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <h3 class="mt-1 ms-3">Canil Little Sun’s Rays</h3>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#bem-vindo">Bem-vindo</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#criadora">Criadora</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#ninhadas">Ninhadas</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#envio">Envio e Entrega</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#produtos">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#hotelzinho">Serviço de Hotelzinho</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#galeria">Galeria</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#historia">Historia</a></li>
+                    <li class="nav-item"><a class="nav-link scroll-link" href="#localizacao">Localização</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Seção Sobre o Canil -->
-    <section class="container text-center mb-3 mt-2">
+    <section class="container text-center mb-3 mt-5">
         <img src="images/logo_canil_t.png" alt="Logo do Canil" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div>
-                <h2>Bem-vindo ao </h2><h1>Canil Little Sun’s Rays</h1>
+                <h2 id="bem-vindo">Bem-vindo ao </h2><h1>Canil Little Sun’s Rays</h1>
                 <p>O Canil Little Sun’s Rays nasceu do amor pela criação responsável e do compromisso em proporcionar filhotes saudáveis, bem-socializados e prontos para levar alegria às suas novas famílias.</p>
                 <div id="more-text" class="collapse">
                     <p>Aqui, cada cãozinho é criado com todo o carinho e acompanhamento necessário. Contamos com uma rede de veterinários parceiros, garantindo cuidados constantes com a saúde, nutrição e desenvolvimento de nossos filhotes. Prezamos por um ambiente seguro, tranquilo e cheio de amor, para que cada filhote cresça equilibrado, feliz e pronto para se tornar um grande companheiro de vida.</p>
@@ -190,7 +269,7 @@
     </section>
 
     <!-- Seção Sobre criadora -->
-    <section class="container text-center mb-5">
+    <section id="criadora" class="container text-center mb-5">
         <img id="criadora-img" src="images/criadora.jpg" alt="Criadora" class="img-fluid img-fluid-flex-inverso border" style="max-width: 300px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div class="me-4">
@@ -210,11 +289,33 @@
         </div>
     </section>
 
+    <!-- Seção Ninhadas -->
+    <section id="ninhadas" class="container mb-5">
+        <h2 class="text-center mb-4">Ninhadas Disponíveis:</h2>
+        <div id="ninhadas-container" class="row g-4">
+            <!--<div class="card border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="bg-light mb-3" 
+                            style="height: 200px; background-size: cover; background-image: url('images/ninhada${index + 1}.jpg');">
+                        </div>
+                        <h5 class="card-title">${ninhada.nome}</h5>
+                        <p class="text-muted">${ninhada.descricao}</p>
+                        <span class="fw-bold">R$ ${ninhada.pais}</span>
+                    </div>
+                </div>-->
+        </div>
+    </section>
+
     <!-- Seção Entrega -->
     <section class="container mb-5 px-4">
-        <h2 class="text-center mb-4">📦 Envio e Entrega dos Filhotes</h2>
+        <h2 id="envio" class="text-center mb-4">📦 Envio e Entrega dos Filhotes</h2>
         <h5>Sabemos que a chegada de um novo filhote é um momento especial, por isso, realizamos a entrega de forma segura e planejada.</h5>
+        <br>
+        <h3>🩺 Saúde e Cuidados</h3>
         <p>
+            ✔ Filhotes Vermifugados e Vacinados – Todos os filhotes são entregues com o protocolo sanitário atualizado.<br>
+            ✔ Alimentação de Qualidade – Utilizamos ração super premium, garantindo o crescimento saudável.<br>
+            ✔ Socialização Adequada – Os filhotes crescem em um ambiente familiar, recebendo estímulos positivos para se tornarem cães confiantes e equilibrados.<br>
             <br>
             ✔ Entrega Somente Após o Desmame Natural – O desmame acontece de forma natural, respeitando o ritmo do filhote. Cada um tem seu tempo, e a entrega só ocorre quando ele está pronto para a transição para seu novo lar.<br>
             ✔ Transporte Seguro – Trabalhamos com envio aéreo e terrestre, sempre garantindo o bem-estar do filhote durante o trajeto.<br>
@@ -231,16 +332,11 @@
             ✅ Vacinado conforme a idade com a vacina V10 importada – Proteção essencial para a saúde do filhote.<br>
             ✅ Devidamente desparasitados – Seguindo protocolos veterinários para a segurança do filhote.<br>
             ✅ Kit filhote – Inclui itens essenciais para os primeiros dias no novo lar.<br>
-            <br><br>
-            <h3>🩺 Saúde e Cuidados</h3>
-            ✔ Filhotes Vermifugados e Vacinados – Todos os filhotes são entregues com o protocolo sanitário atualizado.<br>
-            ✔ Alimentação de Qualidade – Utilizamos ração super premium, garantindo o crescimento saudável.<br>
-            ✔ Socialização Adequada – Os filhotes crescem em um ambiente familiar, recebendo estímulos positivos para se tornarem cães confiantes e equilibrados.<br>
         </p>
     </section>
 
     <!-- Seção Produtos -->
-    <section class="container mb-5">
+    <section id="produtos" class="container mb-5">
         <h2 class="text-center mb-4">Oferecemos tudo pro seu Pet:</h2>
         <div id="produtos-container" class="row g-4">
             <!--<div class="col-md-3">
@@ -257,7 +353,7 @@
     </section>
 
     <!-- Seção Sobre o hotel do canil -->
-    <section class="container text-center mb-5">
+    <section id="hotelzinho" class="container text-center mb-5">
         <img src="images/logo_t.png" alt="Logo do hotelzinho" class="img-fluid img-fluid-flex-inverso" style="height: 350px;">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div class="me-4">
@@ -278,7 +374,7 @@
     </section>
 
     <!-- Seção Galeria -->
-    <section class="container mb-5">
+    <section id="galeria" class="container mb-5">
         <h2 class="text-center mb-4">Nossos Clientes</h2>
         <div class="gallery">
             <img src="images/galeria1.jpg">
@@ -294,7 +390,7 @@
     </section>
 
     <!-- Seção Sobre historia -->
-    <section class="container text-center mb-3 mt-2">
+    <section id="historia" class="container text-center mb-3 mt-2">
         <div class="d-flex align-items-center justify-content-center w-100">
             <div>
                 <h2>História</h2>
@@ -304,7 +400,7 @@
         </div>
     </section>
 
-    <section class="container mb-5 px-3">
+    <section id="localizacao" class="container mb-5 px-3">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4879701572463!2d-34.833085024247794!3d-7.948419279186695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab3dc63797db65%3A0x9ba827b35a0a501a!2sCANIL%20E%20HOTELZINHO%20LITTLE%20SUN&#39;S%20RAYS!5e0!3m2!1spt-BR!2sbr!4v1739290577560!5m2!1spt-BR!2sbr" width="100%" height="300" class="p-0 m-0 border border-5" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 

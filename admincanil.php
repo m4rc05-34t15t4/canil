@@ -79,20 +79,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-    // Upload dos produtos (4 produtos)
+    // Upload das ninhadas (4 max)
+    $ninhadas = [];
+    for ($i = 1; $i <= 4; $i++) {
+        if (!empty($_FILES["ninhada$i"]["name"])) {
+            uploadImage($_FILES["ninhada$i"], "ninhada$i");
+        }
+        $ninhadas[] = [
+            'nome' => $_POST["n_nome$i"] ?? '',
+            'pais' => $_POST["n_pais$i"] ?? '',
+            'descricao' => $_POST["n_descricao$i"] ?? ''
+        ];
+    }
+    
+    // Upload dos produtos (4 max)
     $produtos = [];
     for ($i = 1; $i <= 4; $i++) {
         if (!empty($_FILES["produto$i"]["name"])) {
             uploadImage($_FILES["produto$i"], "produto$i");
         }
         $produtos[] = [
-            'nome' => $_POST["nome$i"] ?? '',
-            'preco' => $_POST["preco$i"] ?? '',
-            'descricao' => $_POST["descricao$i"] ?? ''
+            'nome' => $_POST["p_nome$i"] ?? '',
+            'preco' => $_POST["p_preco$i"] ?? '',
+            'descricao' => $_POST["p_descricao$i"] ?? ''
         ];
     }
-    file_put_contents('produtos.json', json_encode($produtos));
-    echo "<div class='alert alert-success'>Informações dos produtos salvas!</div>";
+
+    $dados = [
+        "ninhadas" => $ninhadas,
+        "produtos" => $produtos
+    ];
+    file_put_contents('dados.json', json_encode($dados));
+    echo "<div class='alert alert-success'>Informações das ninhadas e produtos salvos!</div>";
 }
 ?>
 
@@ -103,15 +121,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch("produtos.json")
+            fetch("dados.json")
                 .then(response => response.json())
-                .then(produtos => {
-                    produtos.forEach((produto, index) => {
-                        $i = index + 1;
-                        $(`#produto_${$i} .input-nome`).val(produto.nome);
-                        $(`#produto_${$i} .input-preco`).val(produto.preco);
-                        $(`#produto_${$i} .input-descricao`).val(produto.descricao);
-                    });
+                .then(json => {
+                    //ninhadas
+                    if(json["ninhadas"] != undefined){
+                        json["ninhadas"].forEach((ninhada, index) => {
+                            $i = index + 1;
+                            $(`#ninhada_${$i} .input-nome`).val(ninhada.nome);
+                            $(`#ninhada_${$i} .input-pais`).val(ninhada.pais);
+                            $(`#ninhada_${$i} .input-descricao`).val(ninhada.descricao);
+                        });
+                    }
+                    //produtos
+                    if(json["produtos"] != undefined){
+                        json["produtos"].forEach((produto, index) => {
+                            $i = index + 1;
+                            $(`#produto_${$i} .input-nome`).val(produto.nome);
+                            $(`#produto_${$i} .input-preco`).val(produto.preco);
+                            $(`#produto_${$i} .input-descricao`).val(produto.descricao);
+                        });
+                    }
                 })
                 .catch(error => console.error("Erro ao carregar os produtos:", error));
         });
@@ -140,10 +170,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-group {
             margin-bottom: 5px;
         }
+
+        #itens .form-group {
+            margin-bottom: 1px;
+            font-size: 11pt;
+        }
+
+        #itens .form-group input {
+            padding: 2px;
+            font-size: 11pt;
+        }
     </style>
 </head>
 <body>
-    <div class="container my-5">
+    <div class="container my-5 w-fill">
         <div class="d-flex flex-rown align-items-center justify-content-center">
             <img src="images/logo_canil_t.png" alt="Logo do Canil" style="height: 150px;">
             <h2 class="text-center">Painel de Administração<br><i class="text-secondary">Canil Little Sun’s Rays</i></h2>
@@ -175,26 +215,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         <?php endfor; ?>
                     </div>
-                    <div class="m-2" style="max-width: 800px">
+                    <div id="itens" class="m-2" style="max-width: 800px">
+                        <h4 class="text-center">Ninhadas (Máx: 4)</h4>
+                        <div class="d-flex flex-rown flex-wrap">
+                            <?php for ($i = 1; $i <= 4; $i++): ?>
+                                <div id="ninhada_<?= $i ?>" class="border p-3 mb-3">
+                                    <h5>Ninhada <?= $i ?></h5>
+                                    <div class="form-group">
+                                        <input type="file" class="form-control" name="ninhada<?= $i ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nome:</label>
+                                        <input type="text" class="form-control input-nome" name="n_nome<?= $i ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pais:</label>
+                                        <input type="text" class="form-control input-pais" name="n_pais<?= $i ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descrição:</label>
+                                        <textarea class="form-control input-descricao" name="n_descricao<?= $i ?>"></textarea>
+                                    </div>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
                         <h4 class="text-center">Produtos (Máx: 4)</h4>
                         <div class="d-flex flex-rown flex-wrap">
                             <?php for ($i = 1; $i <= 4; $i++): ?>
                                 <div id="produto_<?= $i ?>" class="border p-3 mb-3">
-                                    <h4>Produto <?= $i ?></h4>
+                                    <h5>Produto <?= $i ?></h5>
                                     <div class="form-group">
                                         <input type="file" class="form-control" name="produto<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Nome:</label>
-                                        <input type="text" class="form-control input-nome" name="nome<?= $i ?>">
+                                        <input type="text" class="form-control input-nome" name="p_nome<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Preço:</label>
-                                        <input type="text" class="form-control input-preco" name="preco<?= $i ?>">
+                                        <input type="text" class="form-control input-preco" name="p_preco<?= $i ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Descrição:</label>
-                                        <textarea class="form-control input-descricao" name="descricao<?= $i ?>"></textarea>
+                                        <textarea class="form-control input-descricao" name="p_descricao<?= $i ?>"></textarea>
                                     </div>
                                 </div>
                             <?php endfor; ?>
